@@ -1,0 +1,590 @@
+=<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Professional portfolio website for online training project" />
+  <meta name="keywords" content="portfolio, web developer, projects, skills, blog" />
+  <meta name="author" content="Kellia Rwagasana" />
+  <title>UWASE Rwagasana Kellia | Professional Portfolio</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-soft: #111827;
+      --card: rgba(255,255,255,0.08);
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --primary: #8b5cf6;
+      --primary-2: #a855f7;
+      --accent: #22c55e;
+      --border: rgba(255,255,255,0.12);
+      --shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+
+    body.light {
+      --bg: #f8fafc;
+      --bg-soft: #ffffff;
+      --card: rgba(15,23,42,0.05);
+      --text: #0f172a;
+      --muted: #475569;
+      --primary: #7c3aed;
+      --primary-2: #9333ea;
+      --accent: #16a34a;
+      --border: rgba(15,23,42,0.08);
+      --shadow: 0 20px 40px rgba(15,23,42,0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, var(--bg), #1e1b4b);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.light {
+      background: linear-gradient(135deg, #eef2ff, #f8fafc);
+    }
+
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    .container { width: min(1120px, 92%); margin: auto; }
+    section { padding: 90px 0; }
+    .section-title {
+      font-size: 2.3rem;
+      margin-bottom: 12px;
+    }
+    .section-subtitle {
+      color: var(--muted);
+      margin-bottom: 35px;
+      max-width: 700px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      background: rgba(15,23,42,0.72);
+      border-bottom: 1px solid var(--border);
+    }
+    body.light header { background: rgba(255,255,255,0.78); }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+    }
+    .logo { font-size: 1.4rem; font-weight: 700; }
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .nav-links a:hover { color: #facc15; }
+    .toggle {
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+    .hero h1 span { color: #e9d5ff; }
+    .hero p { color: var(--muted); font-size: 1.1rem; max-width: 650px; }
+    .badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin-bottom: 18px;
+      background: var(--card);
+    }
+    .cta-group {
+      display: flex;
+      gap: 16px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: white;
+      box-shadow: var(--shadow);
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn:hover { transform: translateY(-3px); }
+
+    .hero-card, .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+    .hero-card { padding: 24px; }
+
+    .about-grid, .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 30px;
+      align-items: start;
+    }
+    .profile-card { padding: 24px; text-align: center; }
+    .profile-card img {
+      width: 220px; height: 220px; object-fit: cover;
+      border-radius: 50%; margin: 0 auto 18px;
+      border: 4px solid rgba(255,255,255,0.15);
+    }
+    .about-text { padding: 24px; }
+
+    .skill-groups { display: grid; gap: 28px; }
+    .skill-group h3 { margin-bottom: 12px; }
+    .skill-bar { margin-bottom: 16px; }
+    .skill-bar .label { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .bar {
+      height: 10px; border-radius: 999px; background: rgba(255,255,255,0.12); overflow: hidden;
+    }
+    .fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); }
+
+    .filters, .blog-filters {
+      display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px;
+    }
+    .filter-btn {
+      padding: 10px 16px; border-radius: 999px; border: 1px solid var(--border);
+      background: var(--card); color: var(--text); cursor: pointer;
+    }
+    .filter-btn.active { background: linear-gradient(135deg, var(--primary), var(--primary-2)); }
+
+    .projects-grid, .blog-grid, .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .project-card, .blog-card, .testimonial-card, .timeline-item, .ai-box, .contact-form {
+      padding: 22px;
+    }
+    .project-card img, .blog-card img {
+      border-radius: 18px; margin-bottom: 16px; height: 190px; object-fit: cover;
+    }
+    .tags { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+    .tag {
+      font-size: 0.85rem; padding: 6px 10px; border-radius: 999px; background: rgba(139,92,246,0.18);
+      border: 1px solid var(--border);
+    }
+    .card-links { display: flex; gap: 14px; margin-top: 14px; }
+    .card-links a { color: #facc15; font-weight: 700; }
+
+    .timeline { display: grid; gap: 18px; }
+    .timeline-item { border-left: 4px solid var(--primary); }
+    .timeline-item small { color: var(--muted); }
+
+    .blog-card pre {
+      background: #020617; color: #e2e8f0; padding: 14px; border-radius: 12px; overflow: auto; margin-top: 14px;
+    }
+    body.light .blog-card pre { background: #e2e8f0; color: #0f172a; }
+
+    .testimonial-card img {
+      width: 70px; height: 70px; object-fit: cover; border-radius: 50%; margin-bottom: 14px;
+    }
+
+    .contact-form form { display: grid; gap: 16px; }
+    input, textarea, select {
+      width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06); color: var(--text);
+    }
+    textarea { min-height: 140px; resize: vertical; }
+    .socials { display: flex; gap: 14px; margin-top: 16px; flex-wrap: wrap; }
+    .socials a { padding: 10px 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); }
+
+    .modal {
+      position: fixed; inset: 0; background: rgba(2,6,23,0.72); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 2000;
+    }
+    .modal-content {
+      width: min(700px, 95%); padding: 28px; border-radius: 24px; background: var(--bg-soft); border: 1px solid var(--border);
+    }
+    .close { float: right; cursor: pointer; font-size: 1.4rem; }
+
+    footer {
+      padding: 28px 0 40px; text-align: center; color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 900px) {
+      .hero, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .nav { flex-direction: column; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo">UWASE Rwagasana Kellia </div>
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#blog">Blog</a>
+        <a href="#contact">Contact</a>
+        <button class="toggle" id="themeToggle">🌙 Mode</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home">
+      <div class="container hero">
+        <div>
+          <div class="badge">Creative Web Developer • UI/UX Enthusiast</div>
+          <h1>Hello, I'm <span>UWASE Rwagasana Kellia</span></h1>
+          <p>I build clean, modern, and responsive digital experiences that combine design, usability, and performance.</p>
+          <div class="cta-group">
+            <a href="#projects" class="btn btn-primary">View My Work</a>
+            <a href="cv.pdf" download class="btn btn-secondary">Download CV</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <img src="portimg1.avif" alt="Professional workspace" />
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">About Me</h2>
+       <p class="section-subtitle">A professional introduction that presents my background, goals, and strengths.</p>
+        <div class="about-grid">
+          <div class="profile-card card">
+          <img src="kellia-profile.jpeg" alt="UWASE Rwagasana Kelliia Profile Image" />
+            <h3>UWASE Rwagasana Kellia</h3>
+            <p>Web Developer & Digital Creator</p>
+            <br>
+            <a href="cv.pdf" download class="btn btn-primary">Download CV</a>
+          </div>
+          <div class="about-text card">
+            <p>I am a passionate web developer focused on building responsive, user-friendly, and visually engaging websites. I enjoy turning ideas into practical digital solutions through clean code and thoughtful design.</p>
+            <br>
+            <p>My strengths include front-end development, interface design, content presentation, and continuous learning. I am committed to creating work that is both functional and professional.</p>
+            <br>
+            <p><strong>Key Skills:</strong> HTML, CSS, JavaScript, Responsive Design, UI/UX, Basic Python, SQL, GitHub</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <h2 class="section-title">Projects / Work Showcase</h2>
+        <p class="section-subtitle">Filter projects by category to show my versatility and technical range.</p>
+        <div class="filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="web">Web</button>
+          <button class="filter-btn" data-filter="design">Design</button>
+          <button class="filter-btn" data-filter="system">System</button>
+        </div>
+        <div class="projects-grid" id="projectGrid">
+          <div class="project-card card" data-category="web">
+            <img src="portimg2.avif" alt="Portfolio project" />
+            <h3>Portfolio Website</h3>
+            <p>A personal brand website designed and developed using HTML, CSS, and JavaScript.</p>
+            <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div>
+            <div class="card-links">
+              <a href="#" onclick="openModal('Portfolio Website', 'A professional responsive portfolio with dark/light mode, filtering, and interactive sections.')">Details</a>
+              <a href="#">Live Site</a>
+              <a href="#">GitHub</a>
+            </div>
+          </div>
+
+          <div class="project-card card" data-category="design">
+            <img src="portimg3.avif" alt="Design project" />
+            <h3>Company Website Redesign</h3>
+            <p>A Figma-based redesign concept focused on user engagement and modern interface design.</p>
+            <div class="tags"><span class="tag">Figma</span><span class="tag">UI/UX</span></div>
+            <div class="card-links">
+              <a href="#" onclick="openModal('Company Website Redesign', 'Redesigned company interface with cleaner navigation, stronger brand visuals, and mobile responsiveness.')">Details</a>
+              <a href="#">Prototype</a>
+            </div>
+          </div>
+
+          <div class="project-card card" data-category="system">
+            <img src="portimg4.avif" alt="System project" />
+            <h3>Sales & Stock Tracking System</h3>
+            <p>A Google Sheets + custom form solution for sales, expenses, and inventory tracking.</p>
+            <div class="tags"><span class="tag">Apps Script</span><span class="tag">HTML Form</span></div>
+            <div class="card-links">
+              <a href="#" onclick="openModal('Sales & Stock Tracking System', 'Built a simple business management system with reporting and stock updates using Google tools.')">Details</a>
+              <a href="#">Demo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <h2 class="section-title">Skills / Expertise</h2>
+        <p class="section-subtitle">Visual skill representation grouped by specialization.</p>
+        <div class="skill-groups">
+          <div class="card project-card">
+            <h3>Frontend Development</h3>
+            <div class="skill-bar"><div class="label"><span>HTML</span><span></span></div><div class="bar"><div class="fill" style="width:100%"></div></div></div>
+            <div class="skill-bar"><div class="label"><span>CSS</span><span></span></div><div class="bar"><div class="fill" style="width:100%"></div></div></div>
+            <div class="skill-bar"><div class="label"><span>JavaScript</span><span></span></div><div class="bar"><div class="fill" style="width:100%"></div></div></div>
+          </div>
+          <div class="card project-card">
+            <h3>Design & Tools</h3>
+            <div class="skill-bar"><div class="label"><span>Figma</span><span></span></div><div class="bar"><div class="fill" style="width:100%"></div></div></div>
+            <div class="skill-bar"><div class="label"><span>Responsive Design</span><span></span></div><div class="bar"><div class="fill" style="width:100%"></div></div></div>
+            <div class="skill-bar"><div class="label"><span>GitHub</span><span></span></div><div class="bar"><div class="fill" style="width:100%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container">
+        <h2 class="section-title">Experience / Timeline</h2>
+        <p class="section-subtitle">Show your educational and professional journey clearly.</p>
+        <div class="timeline">
+          <div class="timeline-item card">
+            <h3>IT & Digital Projects Intern</h3>
+            <small>2024 – Present</small>
+            <p>Worked on website design, event media production, social media content, and branded promotional materials.</p>
+          </div>
+          <div class="timeline-item card">
+            <h3>Bachelor’s in Information Systems</h3>
+            <small>Ongoing</small>
+            <p>Developing expertise in systems, programming, digital solutions, and project implementation.</p>
+          </div>
+          <div class="timeline-item card">
+            <h3>Professional Certificate in Data Science</h3>
+            <small>Completed</small>
+            <p>Strengthened analytical thinking, data handling, and technology problem-solving skills.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="blog">
+      <div class="container">
+        <h2 class="section-title">Blog Page</h2>
+        <p class="section-subtitle">Includes category filter, image, summaries, and full content support.</p>
+        <div class="blog-filters">
+          <button class="filter-btn active" data-blog="all">All</button>
+          <button class="filter-btn" data-blog="webdev">Web Dev</button>
+          <button class="filter-btn" data-blog="design">Design</button>
+        </div>
+        <div class="blog-grid" id="blogGrid">
+          <article class="blog-card card" data-blog="webdev">
+            <img src="portimg5.avif" alt="Blog image" />
+            <h3>How I Built My First Portfolio</h3>
+            <p>Learn the steps behind planning, designing, and coding a personal portfolio website.</p>
+            <div class="tags"><span class="tag">Web Dev</span></div>
+            <pre><code>const skills = ['HTML', 'CSS', 'JavaScript'];
+console.log(skills);</code></pre>
+          </article>
+          <article class="blog-card card" data-blog="design">
+            <img src="portimg6.avif" alt="Blog image" />
+            <h3>Why Clean Design Matters</h3>
+            <p>A simple breakdown of why visual hierarchy and spacing improve user experience.</p>
+            <div class="tags"><span class="tag">Design</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonials">
+      <div class="container">
+        <h2 class="section-title">Testimonials / Recommendations</h2>
+        <p class="section-subtitle">Optional but highly professional for a portfolio.</p>
+        <div class="testimonial-grid">
+          <div class="testimonial-card card">
+            <img src="port7.jpg" alt="Testimonial person" />
+            <h3>Jane Uwase</h3>
+            <small>Project Coordinator</small>
+            <p>“Kellia consistently delivers creative and well-structured digital work with professionalism and attention to detail.”</p>
+          </div>
+          <div class="testimonial-card card">
+            <img src="portimg8.jpg" alt="Testimonial person" />
+            <h3>Eric Nshimiyimana</h3>
+            <small>Team Lead</small>
+            <p>“A reliable and fast learner with strong initiative in both technical and creative tasks.”</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ai-feature">
+      <div class="container">
+        <h2 class="section-title">Bonus AI Feature</h2>
+        <p class="section-subtitle">A simple AI-like recommendation engine based on user interests.</p>
+        <div class="ai-box card project-card">
+          <label for="interest"><strong>Select your interest:</strong></label><br><br>
+          <select id="interest">
+            <option value="frontend">Frontend Development</option>
+            <option value="design">UI/UX Design</option>
+            <option value="system">Business Systems</option>
+          </select>
+          <br><br>
+          <button class="btn btn-primary" onclick="recommendProject()">Get Recommendation</button>
+          <p id="recommendation" style="margin-top:16px;"></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <h2 class="section-title">Contact Me</h2>
+        <p class="section-subtitle">A validated contact form with social links.</p>
+        <div class="contact-grid">
+          <div class="contact-form card">
+            <form id="contactForm">
+              <input type="text" id="name" placeholder="Your Name" required />
+              <input type="email" id="email" placeholder="Your Email" required />
+              <textarea id="message" placeholder="Your Message" required></textarea>
+              <button type="submit" class="btn btn-primary">Send Message</button>
+              <p id="formMessage"></p>
+            </form>
+          </div>
+          <div class="card project-card">
+            <h3>Connect With Me</h3>
+            <p>Email: kelliarwagasana@email.com</p>
+            <p>Phone: +250 795695886</p>
+            <div class="socials">
+              <a href="https://Linkedin.com/kelliarwagasana">LinkedIn</a>
+              <a href="https://github.com/kelliarwagasana">GitHub</a>
+              <a href="https://Instagram.com/kellia_rwagasana">Instagram</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="projectModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">✖</span>
+      <h2 id="modalTitle"></h2>
+      <p id="modalText"></p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 UWASE Rwagasana Kelliia. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const filterButtons = document.querySelectorAll('[data-filter]');
+    const projectCards = document.querySelectorAll('.project-card[data-category]');
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        projectCards.forEach(card => {
+          card.style.display = (filter === 'all' || card.dataset.category === filter) ? 'block' : 'none';
+        });
+      });
+    });
+
+    const blogButtons = document.querySelectorAll('[data-blog]');
+    const blogCards = document.querySelectorAll('.blog-card');
+
+    blogButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        blogButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.blog;
+        blogCards.forEach(card => {
+          card.style.display = (filter === 'all' || card.dataset.blog === filter) ? 'block' : 'none';
+        });
+      });
+    });
+
+    function openModal(title, text) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalText').textContent = text;
+      document.getElementById('projectModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('projectModal').style.display = 'none';
+    }
+
+    window.addEventListener('click', (e) => {
+      const modal = document.getElementById('projectModal');
+      if (e.target === modal) closeModal();
+    });
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      document.body.classList.toggle('light');
+      localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+    });
+
+    if (localStorage.getItem('theme') === 'light') {
+      document.body.classList.add('light');
+    }
+
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const formMessage = document.getElementById('formMessage');
+
+      if (!name || !email || !message) {
+        formMessage.textContent = 'Please fill in all fields.';
+        formMessage.style.color = '#ef4444';
+        return;
+      }
+
+      formMessage.textContent = 'Message sent successfully!';
+      formMessage.style.color = '#22c55e';
+      this.reset();
+    });
+
+    function recommendProject() {
+      const interest = document.getElementById('interest').value;
+      const output = document.getElementById('recommendation');
+      const recommendations = {
+        frontend: 'Recommended Project: Build a responsive landing page or business website using HTML, CSS, and JavaScript.',
+        design: 'Recommended Project: Create a complete UI/UX case study in Figma and convert it into a real webpage.',
+        system: 'Recommended Project: Develop a stock or sales management system with forms, tables, and reports.'
+      };
+      output.textContent = recommendations[interest];
+    }
+  </script>
+</body>
+</html>
