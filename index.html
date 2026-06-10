@@ -1,4 +1,4 @@
-=<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -102,11 +102,15 @@
       align-items: center;
     }
     .hero h1 {
-      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      font-size: clamp(3rem, 6vw, 5rem);
       line-height: 1.1;
       margin-bottom: 18px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
-    .hero h1 span { color: #e9d5ff; }
     .hero p { color: var(--muted); font-size: 1.1rem; max-width: 650px; }
     .badge {
       display: inline-block;
@@ -165,14 +169,19 @@
     }
     .about-text { padding: 24px; }
 
-    .skill-groups { display: grid; gap: 28px; }
-    .skill-group h3 { margin-bottom: 12px; }
-    .skill-bar { margin-bottom: 16px; }
-    .skill-bar .label { display: flex; justify-content: space-between; margin-bottom: 6px; }
-    .bar {
-      height: 10px; border-radius: 999px; background: rgba(255,255,255,0.12); overflow: hidden;
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
     }
-    .fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); }
+    .skill-card { padding: 26px; transition: transform 0.25s ease, border-color 0.25s ease; }
+    .skill-card:hover { transform: translateY(-6px); border-color: var(--primary); }
+    .skill-icon {
+      width: 52px; height: 52px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; border-radius: 16px; margin-bottom: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+    }
+    .skill-card h3 { margin-bottom: 14px; }
 
     .filters, .blog-filters {
       display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px;
@@ -188,12 +197,13 @@
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 24px;
     }
-    .project-card, .blog-card, .testimonial-card, .timeline-item, .ai-box, .contact-form {
+    .project-card, .blog-card, .testimonial-card, .timeline-item, .ai-box {
       padding: 22px;
     }
     .project-card img, .blog-card img {
       border-radius: 18px; margin-bottom: 16px; height: 190px; object-fit: cover;
     }
+    .project-card .badge { margin-bottom: 10px; font-size: 0.8rem; padding: 6px 12px; }
     .tags { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
     .tag {
       font-size: 0.85rem; padding: 6px 10px; border-radius: 999px; background: rgba(139,92,246,0.18);
@@ -202,8 +212,11 @@
     .card-links { display: flex; gap: 14px; margin-top: 14px; }
     .card-links a { color: #facc15; font-weight: 700; }
 
+    .timeline-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; }
+    .timeline-heading { margin-bottom: 18px; color: var(--primary-2); }
     .timeline { display: grid; gap: 18px; }
     .timeline-item { border-left: 4px solid var(--primary); }
+    .timeline-item h3 { margin-bottom: 6px; }
     .timeline-item small { color: var(--muted); }
 
     .blog-card pre {
@@ -215,14 +228,18 @@
       width: 70px; height: 70px; object-fit: cover; border-radius: 50%; margin-bottom: 14px;
     }
 
-    .contact-form form { display: grid; gap: 16px; }
-    input, textarea, select {
+    select {
       width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border);
       background: rgba(255,255,255,0.06); color: var(--text);
     }
-    textarea { min-height: 140px; resize: vertical; }
     .socials { display: flex; gap: 14px; margin-top: 16px; flex-wrap: wrap; }
-    .socials a { padding: 10px 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); }
+    .socials a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 16px; border: 1px solid var(--border); border-radius: 12px; background: var(--card);
+      transition: 0.25s ease;
+    }
+    .socials a:hover { border-color: var(--primary); transform: translateY(-3px); color: var(--primary-2); }
+    .socials svg { flex-shrink: 0; }
 
     .modal {
       position: fixed; inset: 0; background: rgba(2,6,23,0.72); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 2000;
@@ -236,11 +253,25 @@
       padding: 28px 0 40px; text-align: center; color: var(--muted);
       border-top: 1px solid var(--border);
     }
+@media (max-width: 768px) {
+  .hero, .about-grid, .contact-grid, .timeline-columns {
+    grid-template-columns: 1fr;
+  }
 
-    @media (max-width: 900px) {
-      .hero, .about-grid, .contact-grid { grid-template-columns: 1fr; }
-      .nav { flex-direction: column; gap: 16px; }
-    }
+  .nav {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  section {
+    padding: 50px 20px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+}
+    
   </style>
 </head>
 <body>
@@ -264,8 +295,7 @@
     <section id="home">
       <div class="container hero">
         <div>
-          <div class="badge">Creative Web Developer • UI/UX Enthusiast</div>
-          <h1>Hello, I'm <span>UWASE Rwagasana Kellia</span></h1>
+          <h1>Full-Stack Developer</h1>
           <p>I build clean, modern, and responsive digital experiences that combine design, usability, and performance.</p>
           <div class="cta-group">
             <a href="#projects" class="btn btn-primary">View My Work</a>
@@ -308,41 +338,32 @@
         <div class="filters">
           <button class="filter-btn active" data-filter="all">All</button>
           <button class="filter-btn" data-filter="web">Web</button>
-          <button class="filter-btn" data-filter="design">Design</button>
-          <button class="filter-btn" data-filter="system">System</button>
+          <button class="filter-btn" data-filter="system">Full-Stack</button>
         </div>
         <div class="projects-grid" id="projectGrid">
           <div class="project-card card" data-category="web">
-            <img src="portimg2.avif" alt="Portfolio project" />
-            <h3>Portfolio Website</h3>
-            <p>A personal brand website designed and developed using HTML, CSS, and JavaScript.</p>
-            <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div>
+            <img src="airbnb-project.jpg" alt="Modern house exterior representing the Airbnb booking platform" />
+            <span class="badge">Individual Project</span>
+            <h3>Airbnb Web Application</h3>
+            <p>A booking platform for houses, apartments, and cabins worldwide, designed and built end-to-end with responsive, user-friendly interfaces.</p>
+            <div class="tags"><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">CSS</span><span class="tag">Tailwind CSS</span></div>
             <div class="card-links">
-              <a href="#" onclick="openModal('Portfolio Website', 'A professional responsive portfolio with dark/light mode, filtering, and interactive sections.')">Details</a>
+              <a href="#" onclick="openModal('Airbnb Web Application', 'A solo-built accommodation booking platform enabling users to discover and reserve houses, apartments, and cabins worldwide. Designed and developed independently, with responsive, user-friendly interfaces built using React, TypeScript, CSS, and Tailwind CSS.')">Details</a>
               <a href="#">Live Site</a>
               <a href="#">GitHub</a>
             </div>
           </div>
 
-          <div class="project-card card" data-category="design">
-            <img src="portimg3.avif" alt="Design project" />
-            <h3>Company Website Redesign</h3>
-            <p>A Figma-based redesign concept focused on user engagement and modern interface design.</p>
-            <div class="tags"><span class="tag">Figma</span><span class="tag">UI/UX</span></div>
-            <div class="card-links">
-              <a href="#" onclick="openModal('Company Website Redesign', 'Redesigned company interface with cleaner navigation, stronger brand visuals, and mobile responsiveness.')">Details</a>
-              <a href="#">Prototype</a>
-            </div>
-          </div>
-
           <div class="project-card card" data-category="system">
-            <img src="portimg4.avif" alt="System project" />
-            <h3>Sales & Stock Tracking System</h3>
-            <p>A Google Sheets + custom form solution for sales, expenses, and inventory tracking.</p>
-            <div class="tags"><span class="tag">Apps Script</span><span class="tag">HTML Form</span></div>
+            <img src="ecommerce-project.jpg" alt="Smartphone repair representing the e-commerce refurbishment platform" />
+            <span class="badge">Team Project</span>
+            <h3>E-commerce Refurbishment Platform</h3>
+            <p>A full-stack platform for buying, repairing, and reselling refurbished electronics, with AI-powered device pricing.</p>
+            <div class="tags"><span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">AI Integration</span></div>
             <div class="card-links">
-              <a href="#" onclick="openModal('Sales & Stock Tracking System', 'Built a simple business management system with reporting and stock updates using Google tools.')">Details</a>
-              <a href="#">Demo</a>
+              <a href="#" onclick="openModal('E-commerce Refurbishment Platform', 'A team-built platform for buying damaged electronic devices, repairing them, and reselling at lower prices. Covers device intake, diagnosis, repair tracking, and resale, with AI-based pricing estimation and a full-stack implementation using Node.js, Express, React, and TypeScript.')">Details</a>
+              <a href="#">Live Site</a>
+              <a href="#">GitHub</a>
             </div>
           </div>
         </div>
@@ -352,19 +373,62 @@
     <section id="skills">
       <div class="container">
         <h2 class="section-title">Skills / Expertise</h2>
-        <p class="section-subtitle">Visual skill representation grouped by specialization.</p>
-        <div class="skill-groups">
-          <div class="card project-card">
-            <h3>Frontend Development</h3>
-            <div class="skill-bar"><div class="label"><span>HTML</span><span></span></div><div class="bar"><div class="fill" style="width:100%"></div></div></div>
-            <div class="skill-bar"><div class="label"><span>CSS</span><span></span></div><div class="bar"><div class="fill" style="width:100%"></div></div></div>
-            <div class="skill-bar"><div class="label"><span>JavaScript</span><span></span></div><div class="bar"><div class="fill" style="width:100%"></div></div></div>
+        <p class="section-subtitle">Technologies, tools, and methodologies I use to design, build, and ship full-stack products.</p>
+        <div class="skills-grid">
+          <div class="card skill-card">
+            <div class="skill-icon">💻</div>
+            <h3>Frontend</h3>
+            <div class="tags">
+              <span class="tag">React</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">Tailwind CSS</span>
+            </div>
           </div>
-          <div class="card project-card">
-            <h3>Design & Tools</h3>
-            <div class="skill-bar"><div class="label"><span>Figma</span><span></span></div><div class="bar"><div class="fill" style="width:100%"></div></div></div>
-            <div class="skill-bar"><div class="label"><span>Responsive Design</span><span></span></div><div class="bar"><div class="fill" style="width:100%"></div></div></div>
-            <div class="skill-bar"><div class="label"><span>GitHub</span><span></span></div><div class="bar"><div class="fill" style="width:100%"></div></div></div>
+          <div class="card skill-card">
+            <div class="skill-icon">⚙️</div>
+            <h3>Backend</h3>
+            <div class="tags">
+              <span class="tag">Node.js</span>
+              <span class="tag">Express</span>
+              <span class="tag">REST API Development</span>
+            </div>
+          </div>
+          <div class="card skill-card">
+            <div class="skill-icon">🗄️</div>
+            <h3>Database</h3>
+            <div class="tags">
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">Prisma ORM</span>
+            </div>
+          </div>
+          <div class="card skill-card">
+            <div class="skill-icon">🤖</div>
+            <h3>AI Integration</h3>
+            <div class="tags">
+              <span class="tag">AI-Assisted Feature Development</span>
+              <span class="tag">Device Value Estimation Tools</span>
+            </div>
+          </div>
+          <div class="card skill-card">
+            <div class="skill-icon">🎨</div>
+            <h3>UI/UX</h3>
+            <div class="tags">
+              <span class="tag">Figma</span>
+              <span class="tag">Visily</span>
+            </div>
+          </div>
+          <div class="card skill-card">
+            <div class="skill-icon">🛠️</div>
+            <h3>Tools & Methodologies</h3>
+            <div class="tags">
+              <span class="tag">GitHub</span>
+              <span class="tag">Trello</span>
+              <span class="tag">Swagger</span>
+              <span class="tag">VS Code</span>
+            </div>
           </div>
         </div>
       </div>
@@ -373,22 +437,38 @@
     <section id="experience">
       <div class="container">
         <h2 class="section-title">Experience / Timeline</h2>
-        <p class="section-subtitle">Show your educational and professional journey clearly.</p>
-        <div class="timeline">
-          <div class="timeline-item card">
-            <h3>IT & Digital Projects Intern</h3>
-            <small>2024 – Present</small>
-            <p>Worked on website design, event media production, social media content, and branded promotional materials.</p>
+        <p class="section-subtitle">My professional experience, education, and certifications.</p>
+        <div class="timeline-columns">
+          <div>
+            <h3 class="timeline-heading">Experience</h3>
+            <div class="timeline">
+              <div class="timeline-item card">
+                <h3>Software Development Intern</h3>
+                <small>kLab Academy Kigali · Kigali, Rwanda · 4 months</small>
+                <p>Contributed to full-stack feature development using React, Node.js, Express, and PostgreSQL with Prisma ORM, including AI-assisted tools such as device value estimation.</p>
+              </div>
+            </div>
           </div>
-          <div class="timeline-item card">
-            <h3>Bachelor’s in Information Systems</h3>
-            <small>Ongoing</small>
-            <p>Developing expertise in systems, programming, digital solutions, and project implementation.</p>
-          </div>
-          <div class="timeline-item card">
-            <h3>Professional Certificate in Data Science</h3>
-            <small>Completed</small>
-            <p>Strengthened analytical thinking, data handling, and technology problem-solving skills.</p>
+          <div>
+            <h3 class="timeline-heading">Education</h3>
+            <div class="timeline">
+              <div class="timeline-item card">
+                <h3>Diploma in Mathematics, Physics & Computer Science (MPC)</h3>
+                <small>College Saint Bernard Kansi · Kansi, Rwanda · 2022 – 2025</small>
+              </div>
+              <div class="timeline-item card">
+                <h3>High School Diploma in MPC</h3>
+                <small>College Saint Bernard Kansi · Rwanda · 2025</small>
+              </div>
+              <div class="timeline-item card">
+                <h3>Digital Skills Certificate</h3>
+                <small>College Saint Bernard Kansi · Rwanda · 2022</small>
+              </div>
+              <div class="timeline-item card">
+                <h3>ILEAD Leadership Certificate</h3>
+                <small>John Maxwell Leadership Program · Rwanda · 2025</small>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -464,25 +544,23 @@ console.log(skills);</code></pre>
     <section id="contact">
       <div class="container">
         <h2 class="section-title">Contact Me</h2>
-        <p class="section-subtitle">A validated contact form with social links.</p>
         <div class="contact-grid">
-          <div class="contact-form card">
-            <form id="contactForm">
-              <input type="text" id="name" placeholder="Your Name" required />
-              <input type="email" id="email" placeholder="Your Email" required />
-              <textarea id="message" placeholder="Your Message" required></textarea>
-              <button type="submit" class="btn btn-primary">Send Message</button>
-              <p id="formMessage"></p>
-            </form>
-          </div>
           <div class="card project-card">
             <h3>Connect With Me</h3>
-            <p>Email: kelliarwagasana@email.com</p>
             <p>Phone: +250 795695886</p>
             <div class="socials">
-              <a href="https://Linkedin.com/kelliarwagasana">LinkedIn</a>
-              <a href="https://github.com/kelliarwagasana">GitHub</a>
-              <a href="https://Instagram.com/kellia_rwagasana">Instagram</a>
+              <a href="https://github.com/kelliarwagasana" target="_blank" rel="noopener noreferrer">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.73.5.98 5.24.98 11.52c0 4.91 3.18 9.07 7.6 10.54.56.1.76-.24.76-.54 0-.27-.01-1.13-.02-2.04-3.09.67-3.74-1.32-3.74-1.32-.5-1.28-1.23-1.62-1.23-1.62-1-.69.08-.67.08-.67 1.11.08 1.69 1.14 1.69 1.14.98 1.69 2.58 1.2 3.21.92.1-.71.39-1.2.7-1.48-2.47-.28-5.06-1.23-5.06-5.48 0-1.21.43-2.2 1.14-2.98-.11-.28-.49-1.42.11-2.96 0 0 .93-.3 3.05 1.14a10.6 10.6 0 0 1 5.56 0c2.12-1.44 3.05-1.14 3.05-1.14.6 1.54.22 2.68.11 2.96.71.78 1.14 1.77 1.14 2.98 0 4.26-2.6 5.2-5.08 5.47.4.35.76 1.03.76 2.08 0 1.5-.01 2.71-.01 3.08 0 .3.2.65.77.54a10.53 10.53 0 0 0 7.6-10.54C23.02 5.24 18.27.5 12 .5z"/></svg>
+                GitHub
+              </a>
+              <a href="https://linkedin.com/in/kellia" target="_blank" rel="noopener noreferrer">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.38-1.85 3.62 0 4.29 2.38 4.29 5.48v6.26zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+                LinkedIn
+              </a>
+              <a href="mailto:kelliarwagasana@gmail.com">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                kelliarwagasana@gmail.com
+              </a>
             </div>
           </div>
         </div>
@@ -529,6 +607,7 @@ console.log(skills);</code></pre>
         const filter = btn.dataset.blog;
         blogCards.forEach(card => {
           card.style.display = (filter === 'all' || card.dataset.blog === filter) ? 'block' : 'none';
+
         });
       });
     });
@@ -556,24 +635,6 @@ console.log(skills);</code></pre>
     if (localStorage.getItem('theme') === 'light') {
       document.body.classList.add('light');
     }
-
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const message = document.getElementById('message').value.trim();
-      const formMessage = document.getElementById('formMessage');
-
-      if (!name || !email || !message) {
-        formMessage.textContent = 'Please fill in all fields.';
-        formMessage.style.color = '#ef4444';
-        return;
-      }
-
-      formMessage.textContent = 'Message sent successfully!';
-      formMessage.style.color = '#22c55e';
-      this.reset();
-    });
 
     function recommendProject() {
       const interest = document.getElementById('interest').value;
